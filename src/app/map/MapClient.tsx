@@ -43,6 +43,7 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [mapError, setMapError] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+  const [showRegionDropdown, setShowRegionDropdown] = useState(false);
 
   // 바텀시트 상태
   const [sheetHeight, setSheetHeight] = useState(SHEET_MID_HEIGHT);
@@ -159,17 +160,27 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
   // 마커 클릭 핸들러
   const handleMarkerClick = (shopId: string) => {
     const currentOpened = openedCapsuleRef.current;
+    const currentSelected = selectedShopRef.current;
 
     if (currentOpened === shopId) {
-      // 같은 마커 다시 클릭 - 닫기
-      setOpenedCapsule(null);
-      setSelectedShop(null);
-      openedCapsuleRef.current = null;
-      selectedShopRef.current = null;
+      // 같은 마커 다시 클릭
+      if (currentSelected === null) {
+        // 팝업이 닫혀있으면 다시 열기
+        setSelectedShop(shopId);
+        selectedShopRef.current = shopId;
+      } else {
+        // 팝업이 열려있으면 마커 선택 해제 (완전히 닫기)
+        setOpenedCapsule(null);
+        setSelectedShop(null);
+        openedCapsuleRef.current = null;
+        selectedShopRef.current = null;
 
-      // 축소 (원래 레벨로)
-      if (mapRef.current) {
-        mapRef.current.setLevel(8);
+        // 축소 (원래 레벨로)
+        if (mapRef.current) {
+          mapRef.current.setLevel(8);
+        }
+        // 모든 오버레이 업데이트
+        updateAllOverlays(null);
       }
     } else {
       // 다른 마커 클릭 - 열기
@@ -185,10 +196,9 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
         mapRef.current.setLevel(3); // 확대
         mapRef.current.panTo(position);
       }
+      // 모든 오버레이 업데이트
+      updateAllOverlays(shopId);
     }
-
-    // 모든 오버레이 업데이트
-    updateAllOverlays(shopId === currentOpened ? null : shopId);
   };
 
   // 모든 오버레이 시각적 상태 업데이트
@@ -333,6 +343,10 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
         overlaysRef.current.clear();
         mapRef.current = null;
       }
+      // 지도 컨테이너 내부 DOM 정리
+      if (mapContainerRef.current) {
+        mapContainerRef.current.innerHTML = '';
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gachashops]);
@@ -349,11 +363,11 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* 지도 영역 */}
-      <div className="flex-1 relative min-h-[500px] lg:min-h-screen">
+      <div className="flex-1 relative min-h-[500px] lg:min-h-screen bg-gray-100">
         {/* 카카오맵 컨테이너 */}
         <div
           ref={mapContainerRef}
-          className="absolute inset-0"
+          className="absolute inset-0 bg-gray-100"
           style={{ width: "100%", height: "100%" }}
         />
 
@@ -397,14 +411,10 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
           <div
             className="fixed inset-0 bg-black/40 z-40 animate-in fade-in duration-200"
             onClick={() => {
+              // 팝업만 닫고 마커 선택은 유지
               setSelectedShop(null);
-              setOpenedCapsule(null);
               selectedShopRef.current = null;
-              openedCapsuleRef.current = null;
-              updateAllOverlays(null);
-              if (mapRef.current) {
-                mapRef.current.setLevel(8);
-              }
+              // openedCapsule과 overlay는 유지하여 마커가 선택된 상태로 남음
             }}
           />
           {/* 중앙 모달 */}
@@ -426,14 +436,10 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
                   {/* 닫기 버튼 */}
                   <button
                     onClick={() => {
+                      // 팝업만 닫고 마커 선택은 유지
                       setSelectedShop(null);
-                      setOpenedCapsule(null);
                       selectedShopRef.current = null;
-                      openedCapsuleRef.current = null;
-                      updateAllOverlays(null);
-                      if (mapRef.current) {
-                        mapRef.current.setLevel(8);
-                      }
+                      // openedCapsule과 overlay는 유지하여 마커가 선택된 상태로 남음
                     }}
                     className="absolute top-3 right-3 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors"
                   >
@@ -516,9 +522,11 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-rose-100 to-rose-200">
-                      <svg className="w-6 h-6 text-rose-300" fill="currentColor" viewBox="0 0 24 24">
-                        <ellipse cx="12" cy="12" rx="10" ry="11" />
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-50 via-rose-50 to-sky-50">
+                      <svg viewBox="0 0 24 32" className="w-6 h-8">
+                        <path d="M12 2 C5 2 2 8 2 12 L22 12 C22 8 19 2 12 2 Z" fill="#EDE9FE" stroke="#C4B5FD" strokeWidth="1" />
+                        <path d="M2 16 C2 22 5 28 12 28 C19 28 22 22 22 16 L2 16 Z" fill="#C4B5FD" stroke="#A78BFA" strokeWidth="1" />
+                        <rect x="2" y="12" width="20" height="4" fill="#A78BFA" />
                       </svg>
                     </div>
                   )}
@@ -544,20 +552,57 @@ export default function MapClient({ gachashops, filterGacha }: MapClientProps) {
             {selectedRegion ? `${selectedRegion} 지역` : "전체"} ({filteredShops.length}개)
           </p>
 
-          {/* 지역 필터 - 셀렉트 박스 */}
-          <select
-            value={selectedRegion || ""}
-            onChange={(e) => setSelectedRegion(e.target.value || null)}
-            className="w-full px-4 py-2.5 text-sm font-medium rounded-xl border border-rose-200 bg-white text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-rose-200 focus:border-rose-300 appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3d%22http%3a%2f%2fwww.w3.org%2f2000%2fsvg%22%20viewBox%3d%220%200%2024%2024%22%20fill%3d%22none%22%20stroke%3d%22%23f9a8d4%22%20stroke-width%3d%222%22%20stroke-linecap%3d%22round%22%20stroke-linejoin%3d%22round%22%3e%3cpath%20d%3d%22M6%209l6%206%206-6%22%2f%3e%3c%2fsvg%3e')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat"
-          >
-            <option value="">전체 지역 ({gachashops.length})</option>
-            {regions.map((region) => (
-              <option key={region} value={region}>
-                {region} ({regionCounts[region] || 0})
-              </option>
-            ))}
-          </select>
+          {/* 지역 필터 - 커스텀 드롭다운 */}
+          <div className="relative">
+            <button
+              onClick={() => setShowRegionDropdown(!showRegionDropdown)}
+              className="w-full flex items-center justify-between gap-2 px-4 py-2.5 text-sm font-medium rounded-xl border border-rose-200 bg-white text-gray-700 hover:bg-rose-50 hover:border-rose-300 transition-all"
+            >
+              <div className="flex items-center gap-2">
+                <svg className="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span>{selectedRegion ? `${selectedRegion} (${regionCounts[selectedRegion] || 0})` : `전체 지역 (${gachashops.length})`}</span>
+              </div>
+              <svg className={`w-4 h-4 text-rose-400 transition-transform ${showRegionDropdown ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            {showRegionDropdown && (
+              <>
+                {/* 배경 클릭 시 닫기 */}
+                <div className="fixed inset-0 z-10" onClick={() => setShowRegionDropdown(false)} />
+
+                {/* 드롭다운 메뉴 */}
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border border-rose-100 py-2 z-20 max-h-60 overflow-y-auto">
+                  <button
+                    onClick={() => { setSelectedRegion(null); setShowRegionDropdown(false); }}
+                    className={`w-full px-4 py-2.5 text-left text-sm hover:bg-rose-50 transition-colors flex items-center justify-between ${
+                      selectedRegion === null ? "text-rose-500 font-medium bg-rose-50" : "text-gray-700"
+                    }`}
+                  >
+                    <span>전체 지역</span>
+                    <span className="text-xs text-gray-400">{gachashops.length}</span>
+                  </button>
+                  {regions.map((region) => (
+                    <button
+                      key={region}
+                      onClick={() => { setSelectedRegion(region); setShowRegionDropdown(false); }}
+                      className={`w-full px-4 py-2.5 text-left text-sm hover:bg-rose-50 transition-colors flex items-center justify-between ${
+                        selectedRegion === region ? "text-rose-500 font-medium bg-rose-50" : "text-gray-700"
+                      }`}
+                    >
+                      <span>{region}</span>
+                      <span className="text-xs text-gray-400">{regionCounts[region] || 0}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
+        </div>
         </div>
 
         {/* 스크롤 가능한 목록 영역 */}

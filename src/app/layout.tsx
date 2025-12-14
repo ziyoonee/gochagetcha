@@ -15,9 +15,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://gachagetcha.vercel.app"),
   title: "가차겟차 - 전국 가차샵과 캡슐토이 정보",
   description: "전국 가차샵 위치와 캡슐토이(가챠) 상품 정보를 한눈에 확인하세요. 가까운 가차샵을 찾고, 신상 가차를 확인하고, 나만의 컬렉션을 만들어보세요.",
   keywords: ["가차", "가챠", "캡슐토이", "가차샵", "반다이", "가챠폰"],
+  openGraph: {
+    title: "가차겟차 - 전국 가차샵과 캡슐토이 정보",
+    description: "전국 가차샵 위치와 캡슐토이(가챠) 상품 정보를 한눈에 확인하세요.",
+    siteName: "가차겟차",
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "가차겟차 - 전국 가차샵과 캡슐토이 정보",
+    description: "전국 가차샵 위치와 캡슐토이(가챠) 상품 정보를 한눈에 확인하세요.",
+  },
 };
 
 export default function RootLayout({

@@ -24,6 +24,7 @@ export interface Gacha {
   id: string;
   name: string;
   nameKo?: string;
+  keywords?: string;  // 검색용 키워드 (줄임말, 캐릭터명 등)
   brand: string;
   price: number;
   imageUrl: string;

@@ -62,16 +62,20 @@ export default function EmbeddedMap({ latitude, longitude }: EmbeddedMapProps) {
       if (mapRef.current) {
         mapRef.current = null;
       }
+      // 지도 컨테이너 내부 DOM 정리
+      if (mapContainerRef.current) {
+        mapContainerRef.current.innerHTML = '';
+      }
     };
   }, [latitude, longitude]);
 
   return (
     <div className="rounded-xl overflow-hidden border border-rose-100">
       {/* 지도 영역 */}
-      <div className="relative h-48 md:h-64">
+      <div className="relative h-48 md:h-64 bg-gray-100">
         <div
           ref={mapContainerRef}
-          className="absolute inset-0"
+          className="absolute inset-0 bg-gray-100"
           style={{ width: "100%", height: "100%" }}
         />
 

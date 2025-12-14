@@ -52,12 +52,32 @@ export function loadKakaoMapSDK(): Promise<void> {
   });
 }
 
+// CSS 애니메이션 스타일 주입 (한번만 실행)
+let styleInjected = false;
+function injectMarkerStyles() {
+  if (styleInjected) return;
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes star-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .marker-star {
+      animation: star-bounce 0.5s ease-in-out infinite;
+    }
+  `;
+  document.head.appendChild(style);
+  styleInjected = true;
+}
+
 export function createCapsuleMarkerElement(
   shopId: string,
   isSelected: boolean,
   isOpened: boolean,
   onClick: (shopId: string) => void
 ): HTMLDivElement {
+  injectMarkerStyles();
+
   const topFill = isSelected ? '#FEF3C7' : '#FFF1F2';
   const topStroke = isSelected ? '#F59E0B' : '#FDA4AF';
   const bottomFill = isSelected ? '#FBBF24' : '#FB7185';
@@ -74,11 +94,9 @@ export function createCapsuleMarkerElement(
   `;
 
   const starElement = isOpened
-    ? `<g>
-        <circle cx="24" cy="8" r="8" fill="#FCD34D" stroke="#F59E0B" stroke-width="2">
-          <animate attributeName="cy" values="8;4;8" dur="0.5s" repeatCount="indefinite"/>
-        </circle>
-        <text x="24" y="13" text-anchor="middle" font-size="12" fill="#92400E">★</text>
+    ? `<g class="marker-star" style="transform-origin: 24px 8px;">
+        <circle cx="24" cy="8" r="8" fill="#FCD34D" stroke="#F59E0B" stroke-width="2"/>
+        <text x="24" y="12" text-anchor="middle" font-size="10" fill="#92400E">★</text>
       </g>`
     : '';
 
@@ -113,6 +131,8 @@ export function updateCapsuleMarkerElement(
   isSelected: boolean,
   isOpened: boolean
 ): void {
+  injectMarkerStyles();
+
   const topFill = isSelected ? '#FEF3C7' : '#FFF1F2';
   const topStroke = isSelected ? '#F59E0B' : '#FDA4AF';
   const bottomFill = isSelected ? '#FBBF24' : '#FB7185';
@@ -122,11 +142,9 @@ export function updateCapsuleMarkerElement(
   element.style.transform = isSelected ? 'scale(1.1)' : '';
 
   const starElement = isOpened
-    ? `<g>
-        <circle cx="24" cy="8" r="8" fill="#FCD34D" stroke="#F59E0B" stroke-width="2">
-          <animate attributeName="cy" values="8;4;8" dur="0.5s" repeatCount="indefinite"/>
-        </circle>
-        <text x="24" y="13" text-anchor="middle" font-size="12" fill="#92400E">★</text>
+    ? `<g class="marker-star" style="transform-origin: 24px 8px;">
+        <circle cx="24" cy="8" r="8" fill="#FCD34D" stroke="#F59E0B" stroke-width="2"/>
+        <text x="24" y="12" text-anchor="middle" font-size="10" fill="#92400E">★</text>
       </g>`
     : '';
 

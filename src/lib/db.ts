@@ -27,6 +27,7 @@ function toGacha(row: Record<string, unknown>): Gacha {
     id: row.id as string,
     name: row.name as string,
     nameKo: row.name_ko as string | undefined,
+    keywords: row.keywords as string | undefined,
     brand: row.brand as string,
     price: row.price as number,
     imageUrl: row.image_url as string,
@@ -184,7 +185,7 @@ export async function getGachashopsByGachaId(gachaId: string): Promise<Gachashop
     .map(toGachashop);
 }
 
-// 검색 (한글 검색 name_ko 지원)
+// 검색 (한글 검색 name_ko, keywords 지원)
 export async function searchAll(query: string): Promise<{ gachashops: Gachashop[]; gachas: Gacha[] }> {
   const [gachashopsResult, gachasResult] = await Promise.all([
     supabase
@@ -194,7 +195,7 @@ export async function searchAll(query: string): Promise<{ gachashops: Gachashop[
     supabase
       .from('gachas')
       .select('*')
-      .or(`name.ilike.%${query}%,name_ko.ilike.%${query}%,brand.ilike.%${query}%,category.ilike.%${query}%`),
+      .or(`name.ilike.%${query}%,name_ko.ilike.%${query}%,brand.ilike.%${query}%,category.ilike.%${query}%,keywords.ilike.%${query}%`),
   ]);
 
   return {

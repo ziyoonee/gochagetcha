@@ -137,50 +137,81 @@ export default function GachashopsClient({ gachashops }: GachashopsClientProps) 
   };
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="min-h-screen py-8 bg-gradient-to-b from-white via-rose-50/30 to-white">
+      {/* 배경 장식 */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-rose-100/40 rounded-full blur-3xl" />
+        <div className="absolute top-40 right-20 w-40 h-40 bg-pink-100/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-40 left-1/4 w-48 h-48 bg-sky-100/30 rounded-full blur-3xl" />
+        {/* 떠다니는 캡슐 장식 */}
+        <div className="absolute top-32 right-[15%] animate-bounce opacity-30" style={{ animationDuration: "3s" }}>
+          <svg viewBox="0 0 30 40" className="w-6 h-8">
+            <path d="M15 3 C6 3 3 10 3 16 L27 16 C27 10 24 3 15 3 Z" fill="#FECDD3" />
+            <path d="M3 20 C3 26 6 34 15 34 C24 34 27 26 27 20 L3 20 Z" fill="#FDA4AF" />
+            <rect x="3" y="16" width="24" height="4" fill="#FB7185" />
+          </svg>
+        </div>
+        <div className="absolute bottom-60 left-[8%] animate-bounce opacity-25" style={{ animationDuration: "2.5s", animationDelay: "0.5s" }}>
+          <svg viewBox="0 0 30 40" className="w-5 h-7 rotate-12">
+            <path d="M15 3 C6 3 3 10 3 16 L27 16 C27 10 24 3 15 3 Z" fill="#BAE6FD" />
+            <path d="M3 20 C3 26 6 34 15 34 C24 34 27 26 27 20 L3 20 Z" fill="#7DD3FC" />
+            <rect x="3" y="16" width="24" height="4" fill="#38BDF8" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
         {/* 페이지 헤더 */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-foreground mb-2">가차샵</h1>
-          <p className="text-muted-foreground">
-            전국의 가차샵을 찾아보세요.
-          </p>
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 bg-gradient-to-br from-rose-200 to-rose-300 rounded-2xl flex items-center justify-center shadow-sm">
+              <svg className="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent">가차샵</h1>
+              <p className="text-muted-foreground">전국의 가차샵을 찾아보세요</p>
+            </div>
+          </div>
         </div>
 
-        {/* 검색창 */}
-        <form onSubmit={handleSearch} className="mb-6">
-          <div className="relative max-w-md">
-            <input
-              type="text"
-              placeholder="가차샵 이름 또는 주소 검색..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="w-full pl-4 pr-20 py-3 text-sm rounded-full border border-rose-200 bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-rose-300 transition-all"
-            />
-            {inputValue && (
+        {/* 검색창 & 필터 (Sticky) */}
+        <div className="sticky top-16 z-40 -mx-4 px-4 py-3 bg-gradient-to-b from-white via-white to-white/95 backdrop-blur-sm">
+          {/* 검색창 */}
+          <form onSubmit={handleSearch} className="mb-4">
+            <div className="relative max-w-md">
+              <input
+                type="text"
+                placeholder="가차샵 이름 또는 주소 검색..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className="w-full pl-4 pr-20 py-3 text-sm rounded-full border border-rose-200 bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-rose-300 transition-all shadow-sm"
+              />
+              {inputValue && (
+                <button
+                  type="button"
+                  onClick={clearSearch}
+                  className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
               <button
-                type="button"
-                onClick={clearSearch}
-                className="absolute right-12 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
+                type="submit"
+                className="absolute right-3 top-1/2 -translate-y-1/2 bg-rose-300 text-white p-2 rounded-full hover:bg-rose-400 transition-all"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
-            )}
-            <button
-              type="submit"
-              className="absolute right-3 top-1/2 -translate-y-1/2 bg-rose-300 text-white p-2 rounded-full hover:bg-rose-400 transition-all"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </button>
-          </div>
-        </form>
+            </div>
+          </form>
 
-        {/* 필터 & 정렬 바 */}
-        <div className="mb-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
+          {/* 필터 & 정렬 바 */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
           {/* 필터 헤더 */}
           <div className="flex flex-wrap items-center justify-between gap-2 p-3 sm:p-4 border-b border-gray-50">
             <div className="flex flex-wrap items-center gap-2">
@@ -308,6 +339,7 @@ export default function GachashopsClient({ gachashops }: GachashopsClientProps) 
               </div>
             </div>
           )}
+          </div>
         </div>
 
         {/* 결과 개수 */}
@@ -325,21 +357,43 @@ export default function GachashopsClient({ gachashops }: GachashopsClientProps) 
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-white rounded-2xl border border-rose-100">
-            <div className="w-16 h-16 mx-auto mb-4 bg-rose-50 rounded-full flex items-center justify-center">
-              <svg className="w-8 h-8 text-rose-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="text-center py-16 bg-white rounded-3xl border border-rose-100 shadow-lg relative overflow-hidden">
+            {/* 배경 장식 */}
+            <div className="absolute top-6 left-8 animate-bounce" style={{ animationDuration: "3s" }}>
+              <svg className="w-5 h-5 text-rose-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <p className="text-muted-foreground">검색 결과가 없습니다.</p>
-            {searchQuery && (
-              <button
-                onClick={clearSearch}
-                className="mt-3 text-sm text-rose-500 hover:text-rose-600 underline"
-              >
-                검색 초기화
-              </button>
-            )}
+            <div className="absolute top-10 right-12 animate-pulse" style={{ animationDelay: "0.5s" }}>
+              <svg className="w-4 h-4 text-pink-200" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div className="absolute bottom-8 left-16 animate-bounce" style={{ animationDuration: "2.5s", animationDelay: "1s" }}>
+              <svg viewBox="0 0 30 40" className="w-5 h-7 opacity-30">
+                <path d="M15 3 C6 3 3 10 3 16 L27 16 C27 10 24 3 15 3 Z" fill="#FECDD3" />
+                <path d="M3 20 C3 26 6 34 15 34 C24 34 27 26 27 20 L3 20 Z" fill="#FDA4AF" />
+                <rect x="3" y="16" width="24" height="4" fill="#FB7185" />
+              </svg>
+            </div>
+
+            <div className="relative z-10">
+              <div className="w-20 h-20 mx-auto mb-5 bg-gradient-to-br from-rose-100 to-rose-200 rounded-full flex items-center justify-center shadow-lg">
+                <svg className="w-10 h-10 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <h2 className="text-lg font-bold text-gray-700 mb-2">검색 결과가 없어요</h2>
+              <p className="text-sm text-gray-400 mb-4">다른 검색어로 시도해보세요!</p>
+              {searchQuery && (
+                <button
+                  onClick={clearSearch}
+                  className="bg-gradient-to-r from-rose-400 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white rounded-full px-6 py-2.5 font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
+                >
+                  검색 초기화
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
