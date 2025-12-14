@@ -13,8 +13,10 @@ export default async function Home() {
     getGachas(),
   ]);
 
-  // 인기 가챠샵 (처음 3개)
-  const popularGachashops = gachashops.slice(0, 3);
+  // 신상 가차샵 (최근 등록순 3개)
+  const newGachashops = [...gachashops]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 3);
 
   // 신상 가챠 (최근 출시일 기준 정렬 후 4개)
   const newGachas = [...gachas]
@@ -93,21 +95,14 @@ export default async function Home() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link href="/gachashops">
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white rounded-full px-8 shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
-                  >
+                  <button className="w-full sm:w-auto bg-rose-300 hover:bg-rose-400 text-white rounded-full px-8 py-3 font-medium shadow-sm transition-all hover:scale-105 hover:shadow-md active:scale-95">
                     가차샵 둘러보기
-                  </Button>
+                  </button>
                 </Link>
                 <Link href="/map">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto border-2 border-rose-200 text-rose-500 hover:bg-rose-50 hover:border-rose-300 rounded-full px-8 transition-all hover:scale-105 active:scale-95"
-                  >
+                  <button className="w-full sm:w-auto border border-rose-200 text-rose-400 bg-white hover:bg-rose-50 hover:border-rose-300 rounded-full px-8 py-3 font-medium transition-all hover:scale-105 active:scale-95">
                     지도에서 찾기
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </div>
@@ -120,11 +115,11 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 인기 가차샵 섹션 */}
+      {/* 신상 가차샵 섹션 */}
       <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-foreground">인기 가차샵</h2>
+            <h2 className="text-2xl font-bold text-foreground">신상 가차샵</h2>
             <Link
               href="/gachashops"
               className="text-primary hover:text-primary/80 font-medium flex items-center gap-1"
@@ -146,7 +141,7 @@ export default async function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {popularGachashops.map((shop) => (
+            {newGachashops.map((shop) => (
               <GachashopCard key={shop.id} gachashop={shop} />
             ))}
           </div>
@@ -215,7 +210,7 @@ export default async function Home() {
             <Link href="/map">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-sky-400 to-blue-400 hover:from-sky-500 hover:to-blue-500 text-white rounded-full px-8 shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95 relative z-10"
+                className="bg-rose-300 hover:bg-rose-400 text-white rounded-full px-8 shadow-sm transition-all hover:scale-105 hover:shadow-md active:scale-95 relative z-10"
               >
                 지도에서 찾기
               </Button>

@@ -11,6 +11,10 @@ export interface Gachashop {
   // SNS 링크
   instagramUrl?: string;
   twitterUrl?: string;
+  // 인기도 정보
+  reviewCount?: number;
+  rating?: number;
+  naverPlaceId?: string;
   createdAt: string;
   updatedAt: string;
 }

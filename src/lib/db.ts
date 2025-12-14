@@ -12,6 +12,11 @@ function toGachashop(row: Record<string, unknown>): Gachashop {
     phone: row.phone as string | undefined,
     openingHours: row.opening_hours as string | undefined,
     imageUrl: row.image_url as string | undefined,
+    instagramUrl: row.instagram_url as string | undefined,
+    twitterUrl: row.twitter_url as string | undefined,
+    reviewCount: row.review_count as number | undefined,
+    rating: row.rating as number | undefined,
+    naverPlaceId: row.naver_place_id as string | undefined,
     createdAt: row.created_at as string,
     updatedAt: row.updated_at as string,
   };
@@ -47,6 +52,35 @@ export async function getGachashops(): Promise<Gachashop[]> {
   return data.map(toGachashop);
 }
 
+// 인기 가차샵 조회 (리뷰 수 기준, 없으면 최근 등록순)
+export async function getPopularGachashops(limit: number = 3): Promise<Gachashop[]> {
+  // 먼저 리뷰가 있는 가차샵 시도
+  const { data: withReviews, error: error1 } = await supabase
+    .from('gachashops')
+    .select('*')
+    .gt('review_count', 0)
+    .order('review_count', { ascending: false })
+    .limit(limit);
+
+  if (!error1 && withReviews && withReviews.length >= limit) {
+    return withReviews.map(toGachashop);
+  }
+
+  // 리뷰 데이터 없으면 최근 등록순
+  const { data, error } = await supabase
+    .from('gachashops')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    console.error('인기 가차샵 조회 오류:', error);
+    return [];
+  }
+
+  return data.map(toGachashop);
+}
+
 // 가차샵 상세 조회
 export async function getGachashopById(id: string): Promise<Gachashop | null> {
   const { data, error } = await supabase
@@ -63,19 +97,33 @@ export async function getGachashopById(id: string): Promise<Gachashop | null> {
   return toGachashop(data);
 }
 
-// 가차 목록 조회
+// 가차 목록 조회 (전체)
 export async function getGachas(): Promise<Gacha[]> {
-  const { data, error } = await supabase
-    .from('gachas')
-    .select('*')
-    .order('release_date', { ascending: false });
+  const allData: Record<string, unknown>[] = [];
+  let from = 0;
+  const batchSize = 1000;
 
-  if (error) {
-    console.error('가차 목록 조회 오류:', error);
-    return [];
+  while (true) {
+    const { data, error } = await supabase
+      .from('gachas')
+      .select('*')
+      .order('release_date', { ascending: false })
+      .range(from, from + batchSize - 1);
+
+    if (error) {
+      console.error('가차 목록 조회 오류:', error);
+      break;
+    }
+
+    if (!data || data.length === 0) break;
+
+    allData.push(...data);
+
+    if (data.length < batchSize) break;
+    from += batchSize;
   }
 
-  return data.map(toGacha);
+  return allData.map(toGacha);
 }
 
 // 가차 상세 조회
@@ -183,4 +231,26 @@ export async function getBrands(): Promise<string[]> {
   }
 
   return [...new Set(data.map(d => d.brand))].filter(Boolean) as string[];
+}
+
+// 가차별 보유 가차샵 ID 목록 조회
+export async function getGachaGachashopMap(): Promise<Record<string, string[]>> {
+  const { data, error } = await supabase
+    .from('gachashop_gachas')
+    .select('gacha_id, gachashop_id');
+
+  if (error) {
+    console.error('가차-가차샵 매핑 조회 오류:', error);
+    return {};
+  }
+
+  const map: Record<string, string[]> = {};
+  data.forEach((item: { gacha_id: string; gachashop_id: string }) => {
+    if (!map[item.gacha_id]) {
+      map[item.gacha_id] = [];
+    }
+    map[item.gacha_id].push(item.gachashop_id);
+  });
+
+  return map;
 }

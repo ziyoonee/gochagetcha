@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import GachashopCard from "@/components/cards/GachashopCard";
@@ -19,8 +19,8 @@ export default function FavoritesClient({ allGachashops, allGachas }: FavoritesC
   const [activeTab, setActiveTab] = useState<"shops" | "gachas">("shops");
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
+  // 즐겨찾기 목록 새로고침
+  const refreshFavorites = useCallback(() => {
     const favorites = getFavorites();
 
     const shops = allGachashops.filter((shop) =>
@@ -34,6 +34,31 @@ export default function FavoritesClient({ allGachashops, allGachas }: FavoritesC
     setFavoriteGachas(gachas);
   }, [allGachashops, allGachas]);
 
+  useEffect(() => {
+    setMounted(true);
+    refreshFavorites();
+
+    // localStorage 변경 감지 (다른 탭에서 변경 시)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "gachagetcha-favorites") {
+        refreshFavorites();
+      }
+    };
+
+    // 같은 탭에서 변경 감지 (커스텀 이벤트)
+    const handleFavoriteChange = () => {
+      refreshFavorites();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("favoriteChanged", handleFavoriteChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("favoriteChanged", handleFavoriteChange);
+    };
+  }, [refreshFavorites]);
+
   const totalFavorites = favoriteShops.length + favoriteGachas.length;
 
   if (!mounted) {
@@ -41,8 +66,8 @@ export default function FavoritesClient({ allGachashops, allGachas }: FavoritesC
       <div className="min-h-screen py-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="animate-pulse">
-            <div className="h-10 bg-muted rounded w-48 mb-4"></div>
-            <div className="h-6 bg-muted rounded w-64"></div>
+            <div className="h-10 bg-gray-200 rounded w-48 mb-4"></div>
+            <div className="h-6 bg-gray-100 rounded w-64"></div>
           </div>
         </div>
       </div>
@@ -63,10 +88,10 @@ export default function FavoritesClient({ allGachashops, allGachas }: FavoritesC
         </div>
 
         {totalFavorites === 0 ? (
-          <div className="text-center py-16 bg-white rounded-2xl border border-primary/10">
-            <div className="w-16 h-16 mx-auto mb-4 bg-accent/20 rounded-full flex items-center justify-center">
+          <div className="text-center py-16 bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="w-16 h-16 mx-auto mb-4 bg-amber-50 rounded-full flex items-center justify-center">
               <svg
-                className="w-8 h-8 text-accent"
+                className="w-8 h-8 text-amber-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -79,28 +104,22 @@ export default function FavoritesClient({ allGachashops, allGachas }: FavoritesC
                 />
               </svg>
             </div>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-gray-600 mb-4">
               아직 즐겨찾기한 항목이 없어요.
             </p>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-sm text-gray-400 mb-6">
               가차샵이나 가차의 별 아이콘을 눌러 즐겨찾기에 추가해보세요!
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link href="/gachashops">
-                <Button
-                  variant="outline"
-                  className="border-primary text-primary hover:bg-primary/10 rounded-full"
-                >
+                <button className="bg-rose-300 hover:bg-rose-400 text-white rounded-full px-6 py-2.5 font-medium shadow-sm transition-all hover:shadow-md">
                   가차샵 둘러보기
-                </Button>
+                </button>
               </Link>
               <Link href="/gachas">
-                <Button
-                  variant="outline"
-                  className="border-secondary text-secondary-foreground hover:bg-secondary/10 rounded-full"
-                >
+                <button className="border border-rose-200 text-rose-400 bg-white hover:bg-rose-50 hover:border-rose-300 rounded-full px-6 py-2.5 font-medium transition-all">
                   가차 둘러보기
-                </Button>
+                </button>
               </Link>
             </div>
           </div>
@@ -108,28 +127,26 @@ export default function FavoritesClient({ allGachashops, allGachas }: FavoritesC
           <>
             {/* 탭 */}
             <div className="flex gap-2 mb-8">
-              <Button
-                variant={activeTab === "shops" ? "default" : "outline"}
+              <button
                 onClick={() => setActiveTab("shops")}
-                className={`rounded-full ${
+                className={`px-5 py-2.5 rounded-full font-medium transition-all ${
                   activeTab === "shops"
-                    ? "bg-primary text-primary-foreground"
-                    : "border-primary/30 hover:bg-primary/10"
+                    ? "bg-rose-300 text-white shadow-sm"
+                    : "bg-white border border-rose-200 text-rose-400 hover:bg-rose-50 hover:border-rose-300"
                 }`}
               >
                 가차샵 ({favoriteShops.length})
-              </Button>
-              <Button
-                variant={activeTab === "gachas" ? "default" : "outline"}
+              </button>
+              <button
                 onClick={() => setActiveTab("gachas")}
-                className={`rounded-full ${
+                className={`px-5 py-2.5 rounded-full font-medium transition-all ${
                   activeTab === "gachas"
-                    ? "bg-primary text-primary-foreground"
-                    : "border-primary/30 hover:bg-primary/10"
+                    ? "bg-rose-300 text-white shadow-sm"
+                    : "bg-white border border-rose-200 text-rose-400 hover:bg-rose-50 hover:border-rose-300"
                 }`}
               >
                 가차 ({favoriteGachas.length})
-              </Button>
+              </button>
             </div>
 
             {/* 가차샵 탭 */}
@@ -142,8 +159,8 @@ export default function FavoritesClient({ allGachashops, allGachas }: FavoritesC
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 bg-white rounded-2xl border border-primary/10">
-                    <p className="text-muted-foreground">
+                  <div className="text-center py-12 bg-white rounded-2xl border border-gray-100">
+                    <p className="text-gray-500">
                       즐겨찾기한 가차샵이 없습니다.
                     </p>
                   </div>
@@ -161,8 +178,8 @@ export default function FavoritesClient({ allGachashops, allGachas }: FavoritesC
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 bg-white rounded-2xl border border-primary/10">
-                    <p className="text-muted-foreground">
+                  <div className="text-center py-12 bg-white rounded-2xl border border-gray-100">
+                    <p className="text-gray-500">
                       즐겨찾기한 가차가 없습니다.
                     </p>
                   </div>

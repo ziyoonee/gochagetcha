@@ -32,7 +32,7 @@ export default function GachashopCard({ gachashop }: GachashopCardProps) {
           )}
           {/* 호버 시 나타나는 오버레이 */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="absolute top-2 right-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
             <FavoriteButton type="gachashop" id={gachashop.id} />
           </div>
           {/* 호버 시 나타나는 "보러가기" 버튼 */}

@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import GachashopCard from "@/components/cards/GachashopCard";
 import FavoriteButton from "@/components/common/FavoriteButton";
 import { getGachaById, getGachashopsByGachaId } from "@/lib/db";
@@ -170,8 +169,8 @@ export default async function GachaDetailPage({ params }: GachaDetailPageProps) 
 
               {/* 판매처 찾기 버튼 */}
               <div className="mt-8">
-                <Link href="/map">
-                  <Button className="w-full sm:w-auto bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white rounded-full shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95">
+                <Link href={`/map?gacha=${id}`}>
+                  <button className="w-full sm:w-auto bg-rose-300 hover:bg-rose-400 text-white rounded-full px-6 py-2.5 font-medium shadow-sm transition-all hover:scale-105 hover:shadow-md active:scale-95 flex items-center justify-center">
                     <svg
                       className="w-5 h-5 mr-2"
                       fill="none"
@@ -186,7 +185,7 @@ export default async function GachaDetailPage({ params }: GachaDetailPageProps) 
                       />
                     </svg>
                     판매처 지도에서 보기
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </div>

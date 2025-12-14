@@ -80,7 +80,26 @@
       "Bash(npx tsx scripts/collect-sns-urls.ts)",
       "Bash(npm install openai puppeteer)",
       "Bash(npm install dotenv)",
-      "Bash(npx tsx scripts/analyze-sns-gachas.ts)"
+      "Bash(npx tsx scripts/analyze-sns-gachas.ts)",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachashops?select=name,instagram_url,twitter_url&instagram_url=neq.null&limit=5\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachashops?select=name,instagram_url&instagram_url=neq.null&limit=5\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachashop_gachas?select=gachashop_id,gacha_id,source,confidence&order=created_at.desc&limit=10\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\" -H \"Authorization: Bearer sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachashop_gachas?select=*&limit=1\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\" -H \"Authorization: Bearer sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachashop_gachas?select=gachashop_id,gacha_id&limit=10\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\" -H \"Authorization: Bearer sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachashop_gachas?select=gachashop_id,gacha:gacha_id(name),gachashop:gachashop_id(name)\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\" -H \"Authorization: Bearer sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")",
+      "Bash(npm run dev)",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachashops?select=address&limit=20\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")",
+      "Bash(npx tsx scripts/crawl-naver-place.ts)",
+      "WebFetch(domain:m.place.naver.com)",
+      "Bash(curl -s \"https://m.place.naver.com/place/1973638486/home\" -H \"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\")",
+      "Bash(curl -s \"https://pcmap-api.place.naver.com/graphql\"  -H \"Content-Type: application/json\"  -H \"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\"  -H \"Referer: https://map.naver.com/\"  --data-raw '[{\"\"operationName\"\":\"\"getVisitorReviewStats\"\",\"\"variables\"\":{\"\"businessId\"\":\"\"1973638486\"\"},\"\"query\"\":\"\"query getVisitorReviewStats($businessId: String!) { visitorReviews(businessId: $businessId) { total } }\"\"}]')",
+      "Bash(curl -s \"https://search.naver.com/search.naver?where=nexearch&query=%EA%B0%80%EC%B1%A0%EB%8B%B9%20%EC%84%9C%EC%9A%B8\" )",
+      "Bash(node -e \"\nfetch(''https://search.naver.com/search.naver?where=nexearch&query='' + encodeURIComponent(''가챠당 서울''), {\n  headers: {\n    ''User-Agent'': ''Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'',\n    ''Accept-Language'': ''ko-KR,ko''\n  }\n})\n.then(r => r.text())\n.then(html => {\n  // 리뷰 패턴 찾기\n  const patterns = [\n    /방문자리뷰\\s*(\\d+(?:,\\d+)*)/g,\n    /리뷰\\s*(\\d+(?:,\\d+)*)/g,\n    /후기\\s*(\\d+(?:,\\d+)*)/g,\n  ];\n  \n  patterns.forEach(p => {\n    const matches = [...html.matchAll(p)];\n    if (matches.length) {\n      console.log(''Pattern:'', p.source);\n      matches.slice(0, 3).forEach(m => console.log(''  Found:'', m[0], ''-> count:'', m[1]));\n    }\n  });\n  \n  // place ID 찾기\n  const placeMatch = html.match(/place\\/(\\d+)/);\n  if (placeMatch) console.log(''Place ID:'', placeMatch[1]);\n})\n.catch(e => console.error(e));\n\")",
+      "Bash(node -e \"\nfetch(''https://search.naver.com/search.naver?where=nexearch&query='' + encodeURIComponent(''가챠당 서울''), {\n  headers: {\n    ''User-Agent'': ''Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'',\n    ''Accept-Language'': ''ko-KR,ko''\n  }\n})\n.then(r => r.text())\n.then(html => {\n  // 리뷰 관련 텍스트 찾기\n  const reviewSection = html.match(/리뷰[^<]{0,50}/g);\n  if (reviewSection) {\n    console.log(''Found review mentions:'');\n    reviewSection.slice(0, 5).forEach(s => console.log('' '', s));\n  }\n  \n  // place ID\n  const placeMatch = html.match(/place\\/(\\d+)/);\n  console.log(''\\nPlace ID:'', placeMatch ? placeMatch[1] : ''not found'');\n  \n  // HTML 길이\n  console.log(''\\nHTML length:'', html.length);\n})\n.catch(e => console.error(''Error:'', e.message));\n\")",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachas?select=name,name_ko&limit=20\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")",
+      "Bash(npx tsx scripts/translate-gacha-names.ts)",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachas?select=id&limit=1\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\" -H \"Prefer: count=exact\" -I)",
+      "Bash(curl -s \"https://jsswbuxxvdirrzdkaouw.supabase.co/rest/v1/gachas?select=name,name_ko&limit=10\" -H \"apikey: sb_publishable_8Jgm3Pia07hPA77NbkinMg_Hwj8wx6q\")"
     ]
   }
 }

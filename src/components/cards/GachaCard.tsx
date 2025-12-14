@@ -36,7 +36,7 @@ export default function GachaCard({ gacha }: GachaCardProps) {
           )}
           {/* 호버 시 나타나는 오버레이 */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="absolute top-2 right-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
             <FavoriteButton type="gacha" id={gacha.id} />
           </div>
           {isNew && (

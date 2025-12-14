@@ -30,7 +30,7 @@ export default function Footer() {
                   <ellipse cx="14" cy="14" rx="4" ry="3" fill="white" opacity="0.6" />
                 </svg>
               </div>
-              <span className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <span className="text-lg font-bold bg-gradient-to-r from-rose-400 to-sky-400 bg-clip-text text-transparent">
                 가차겟차
               </span>
             </div>

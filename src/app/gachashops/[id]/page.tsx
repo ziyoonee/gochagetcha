@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import GachaCard from "@/components/cards/GachaCard";
 import FavoriteButton from "@/components/common/FavoriteButton";
+import EmbeddedMap from "@/components/common/EmbeddedMap";
+import CopyableText from "@/components/common/CopyableText";
 import { getGachashopById, getGachasByGachashopId } from "@/lib/db";
 
 export const revalidate = 60;
@@ -109,7 +110,7 @@ export default async function GachashopDetailPage({
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <span className="text-foreground">{gachashop.address}</span>
+                  <CopyableText text={gachashop.address} className="text-foreground" />
                 </div>
 
                 {/* 영업시간 */}
@@ -150,35 +151,25 @@ export default async function GachashopDetailPage({
                         d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                       />
                     </svg>
-                    <span className="text-foreground">{gachashop.phone}</span>
+                    <CopyableText text={gachashop.phone} className="text-foreground" />
                   </div>
                 )}
               </div>
 
-              {/* 지도 버튼 */}
-              <div className="mt-6">
-                <Link href="/map">
-                  <Button className="w-full sm:w-auto bg-gradient-to-r from-sky-400 to-blue-400 hover:from-sky-500 hover:to-blue-500 text-white rounded-full shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95">
-                    <svg
-                      className="w-5 h-5 mr-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                      />
-                    </svg>
-                    지도에서 보기
-                  </Button>
-                </Link>
-              </div>
             </div>
           </div>
         </div>
+
+        {/* 지도 섹션 */}
+        {gachashop.latitude && gachashop.longitude && (
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-foreground mb-4">위치</h2>
+            <EmbeddedMap
+              latitude={gachashop.latitude}
+              longitude={gachashop.longitude}
+            />
+          </div>
+        )}
 
         {/* 보유 가차 목록 */}
         <div>

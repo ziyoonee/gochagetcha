@@ -1,27 +1,31 @@
-import GachashopCard from "@/components/cards/GachashopCard";
+import { Suspense } from "react";
 import { getGachashops } from "@/lib/db";
+import GachashopsClient from "./GachashopsClient";
 
-export const revalidate = 60; // 60초마다 재검증
+export const revalidate = 60;
 
 export default async function GachashopsPage() {
   const gachashops = await getGachashops();
 
   return (
+    <Suspense fallback={<GachashopsLoading />}>
+      <GachashopsClient gachashops={gachashops} />
+    </Suspense>
+  );
+}
+
+function GachashopsLoading() {
+  return (
     <div className="min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4">
-        {/* 페이지 헤더 */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">가차샵</h1>
-          <p className="text-muted-foreground">
-            전국의 가차샵을 찾아보세요. 총 {gachashops.length}개의 가차샵이
-            있습니다.
-          </p>
+        <div className="mb-6">
+          <div className="h-9 w-32 bg-gray-200 rounded animate-pulse mb-2" />
+          <div className="h-5 w-48 bg-gray-100 rounded animate-pulse" />
         </div>
-
-        {/* 가챠샵 그리드 */}
+        <div className="h-12 w-full max-w-md bg-gray-100 rounded-full animate-pulse mb-6" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {gachashops.map((shop) => (
-            <GachashopCard key={shop.id} gachashop={shop} />
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-48 bg-gray-100 rounded-2xl animate-pulse" />
           ))}
         </div>
       </div>

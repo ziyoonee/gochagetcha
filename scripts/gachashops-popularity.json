@@ -1,0 +1,758 @@
+[
+  {
+    "name": "가챠당",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1973638486"
+  },
+  {
+    "name": "가챠오션",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1536679726"
+  },
+  {
+    "name": "나나가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1658915181"
+  },
+  {
+    "name": "우주가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1935233321"
+  },
+  {
+    "name": "아이가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1258548110"
+  },
+  {
+    "name": "지일가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1968164380"
+  },
+  {
+    "name": "가챠쿠챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1479787045"
+  },
+  {
+    "name": "놀이터가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1106679886"
+  },
+  {
+    "name": "브라더굿즈 가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2144105878"
+  },
+  {
+    "name": "행궁가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1053738671"
+  },
+  {
+    "name": "꽁주가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2020665191"
+  },
+  {
+    "name": "가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1463883932"
+  },
+  {
+    "name": "가챠콩",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1056653512"
+  },
+  {
+    "name": "달빛가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1518549247"
+  },
+  {
+    "name": "가챠팝",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1578891869"
+  },
+  {
+    "name": "당근가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1031667649"
+  },
+  {
+    "name": "가챠파크",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2146485293"
+  },
+  {
+    "name": "에브리가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1699604798"
+  },
+  {
+    "name": "플레이가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1335741675"
+  },
+  {
+    "name": "가챠&샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1095078930"
+  },
+  {
+    "name": "포켓가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2043187385"
+  },
+  {
+    "name": "가챠마켓",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1312871837"
+  },
+  {
+    "name": "가챠용",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1475598442"
+  },
+  {
+    "name": "가챠네스트",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1221523316"
+  },
+  {
+    "name": "가챠고",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2017776195"
+  },
+  {
+    "name": "하이가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1023484269"
+  },
+  {
+    "name": "애니가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1827927909"
+  },
+  {
+    "name": "고고샵가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1050945104"
+  },
+  {
+    "name": "가챠엑스 명동점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "가챠챠",
+    "reviewCount": 1,
+    "rating": null,
+    "naverPlaceId": "2086282525"
+  },
+  {
+    "name": "가치가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2097400718"
+  },
+  {
+    "name": "행궁가챠 가챠챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1744504691"
+  },
+  {
+    "name": "가챠양 본점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": "677"
+  },
+  {
+    "name": "더가챠 성균관대점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2045410724"
+  },
+  {
+    "name": "까까가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2098730301"
+  },
+  {
+    "name": "가챠가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1230740939"
+  },
+  {
+    "name": "토모가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2029000273"
+  },
+  {
+    "name": "또또가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2080594378"
+  },
+  {
+    "name": "가챠팡팡",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2009661948"
+  },
+  {
+    "name": "여기로가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2083745454"
+  },
+  {
+    "name": "가챠차",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1140817932"
+  },
+  {
+    "name": "반야가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2063041564"
+  },
+  {
+    "name": "호시가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2018764441"
+  },
+  {
+    "name": "가차",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1181910063"
+  },
+  {
+    "name": "가차샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1106863059"
+  },
+  {
+    "name": "가차샵 충장로점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2036361869"
+  },
+  {
+    "name": "가차양신림",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1444045477"
+  },
+  {
+    "name": "가차샵노리터 평촌본점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "가차제일교회",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "16817917"
+  },
+  {
+    "name": "더(The)카페&가차",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "가차들",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "새글고가차도",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1081254217"
+  },
+  {
+    "name": "가차앞골",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "38074898"
+  },
+  {
+    "name": "가챠마트 송리단길점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "캡슐토이",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1548717250"
+  },
+  {
+    "name": "코끼리밥 캡슐토이",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1146856174"
+  },
+  {
+    "name": "캡슐토이뽑기",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1202655207"
+  },
+  {
+    "name": "캡슐토이 하하가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1934542445"
+  },
+  {
+    "name": "캡슐토이월드",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "을왕캡슐토이",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1736047590"
+  },
+  {
+    "name": "캡슐토이샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1426335618"
+  },
+  {
+    "name": "캡슐토이 인스파이어 엔터테인먼트 리조트",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "캡슐플래닛",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2058862669"
+  },
+  {
+    "name": "호카상점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1196954471"
+  },
+  {
+    "name": "럭키포켓",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "정스슈퍼",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1404598449"
+  },
+  {
+    "name": "꽁실가챠샵 화곡점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2012842261"
+  },
+  {
+    "name": "애니팝",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "33935784"
+  },
+  {
+    "name": "가샤폰 반다이오피셜샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1178626595"
+  },
+  {
+    "name": "가샤폰스트리트 홍대점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1706079325"
+  },
+  {
+    "name": "가샤폰 반다이오피셜샵 in잠실",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "퍼니랜드 서울개봉점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1386718568"
+  },
+  {
+    "name": "퍼니랜드 서울홍대점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1817180046"
+  },
+  {
+    "name": "퍼니랜드 서울인사동점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "지니코인게임랜드 지곡점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "퍼니랜드 서울노량진점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1092184751"
+  },
+  {
+    "name": "행운게임랜드",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2066390111"
+  },
+  {
+    "name": "국가대표ID게임랜드 강남점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1214352217"
+  },
+  {
+    "name": "힙플조이",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1275706848"
+  },
+  {
+    "name": "스마일 게임랜드",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2062310631"
+  },
+  {
+    "name": "퍼니랜드 경기용인수지점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": "38053"
+  },
+  {
+    "name": "더뽑기샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1793708286"
+  },
+  {
+    "name": "팡팡캐릭터인형뽑기",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "퍼니랜드 서울시흥점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1373546552"
+  },
+  {
+    "name": "캑티가챠샵 종각점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2092788868"
+  },
+  {
+    "name": "니니 명동",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2069710320"
+  },
+  {
+    "name": "애니메클럽",
+    "reviewCount": 4,
+    "rating": null,
+    "naverPlaceId": "37868039"
+  },
+  {
+    "name": "퍼니랜드 경기부천점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "퍼니랜드 서울코엑스점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": "48909"
+  },
+  {
+    "name": "퍼니랜드 경기고양신원점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1234081584"
+  },
+  {
+    "name": "퍼니랜드 성남파미어스몰점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": "1251049419"
+  },
+  {
+    "name": "프렌즈게임뽑기 김제점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "가챠샵 서면점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "38767060"
+  },
+  {
+    "name": "뽑기게임랜드",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "대빵인형뽑기 성신점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "퍼펙트게임랜드 수원남문본점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1865582374"
+  },
+  {
+    "name": "미니돌",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1565157035"
+  },
+  {
+    "name": "아이디게임랜드",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1007834461"
+  },
+  {
+    "name": "보물섬게임랜드",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "가챠샵 메나미죠죠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "38473259"
+  },
+  {
+    "name": "써니사이드 전주가챠샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2086114878"
+  },
+  {
+    "name": "비잉비잉 남포점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1535990717"
+  },
+  {
+    "name": "봉봉스테이션 신촌점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2092691329"
+  },
+  {
+    "name": "슈퍼베어 인형뽑기방",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1284522239"
+  },
+  {
+    "name": "핑크팡",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2082913712"
+  },
+  {
+    "name": "펀&펀뽑기샵게임랜드",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "얼음왕국 광양394호점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2080787828"
+  },
+  {
+    "name": "캑티가챠샵 홍대점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1888817645"
+  },
+  {
+    "name": "브라더굿즈 가챠샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2072105741"
+  },
+  {
+    "name": "브라더굿즈",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1162402030"
+  },
+  {
+    "name": "가챠샵 전주점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "349893378"
+  },
+  {
+    "name": "가챠샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1389163854"
+  },
+  {
+    "name": "별보러가챠",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1271774758"
+  },
+  {
+    "name": "가챠엑스 홍대입구점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2073624813"
+  },
+  {
+    "name": "미니돌 구로점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "캑티가챠샵 부평점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2014310357"
+  },
+  {
+    "name": "가챠샵 인천점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1568946239"
+  },
+  {
+    "name": "쿄우마가챠샵 LC타워점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2076113979"
+  },
+  {
+    "name": "브라더굿즈가챠샵 광주충장점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2048897015"
+  },
+  {
+    "name": "구루구루가챠샵",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2018906593"
+  },
+  {
+    "name": "호데데가챠샵 오산본점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "1232229506"
+  },
+  {
+    "name": "봉봉가챠 광복점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": "2044505148"
+  },
+  {
+    "name": "캑티가챠샵 건대점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2040147553"
+  },
+  {
+    "name": "캑티 가챠샵 노원점",
+    "reviewCount": 10,
+    "rating": null,
+    "naverPlaceId": "2096340512"
+  },
+  {
+    "name": "티니핑가챠샵 현대프리미엄아울렛대전점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  },
+  {
+    "name": "가챠샵 롯데백화점부산본점",
+    "reviewCount": 0,
+    "rating": null,
+    "naverPlaceId": null
+  }
+]

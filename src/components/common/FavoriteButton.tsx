@@ -28,6 +28,9 @@ export default function FavoriteButton({
     e.stopPropagation();
     const newState = toggleFavorite(type, id);
     setIsFav(newState);
+
+    // 즐겨찾기 변경 이벤트 발생 (FavoritesClient에서 감지)
+    window.dispatchEvent(new CustomEvent("favoriteChanged"));
   };
 
   if (!mounted) {
