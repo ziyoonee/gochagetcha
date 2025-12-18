@@ -224,34 +224,56 @@ export async function searchAll(query: string): Promise<{ gachashops: Gachashop[
   };
 }
 
-// 카테고리 목록 조회
+// 카테고리 목록 조회 (전체 페이지네이션)
 export async function getCategories(): Promise<string[]> {
-  const { data, error } = await supabase
-    .from('gachas')
-    .select('category')
-    .order('category');
+  const allCategories: string[] = [];
+  let from = 0;
+  const batchSize = 1000;
 
-  if (error) {
-    console.error('카테고리 조회 오류:', error);
-    return [];
+  while (true) {
+    const { data, error } = await supabase
+      .from('gachas')
+      .select('category')
+      .range(from, from + batchSize - 1);
+
+    if (error) {
+      console.error('카테고리 조회 오류:', error);
+      break;
+    }
+
+    if (!data || data.length === 0) break;
+    allCategories.push(...data.map(d => d.category as string));
+    if (data.length < batchSize) break;
+    from += batchSize;
   }
 
-  return [...new Set(data.map(d => d.category))].filter(Boolean) as string[];
+  return [...new Set(allCategories)].filter(Boolean).sort();
 }
 
-// 브랜드 목록 조회
+// 브랜드 목록 조회 (전체 페이지네이션)
 export async function getBrands(): Promise<string[]> {
-  const { data, error } = await supabase
-    .from('gachas')
-    .select('brand')
-    .order('brand');
+  const allBrands: string[] = [];
+  let from = 0;
+  const batchSize = 1000;
 
-  if (error) {
-    console.error('브랜드 조회 오류:', error);
-    return [];
+  while (true) {
+    const { data, error } = await supabase
+      .from('gachas')
+      .select('brand')
+      .range(from, from + batchSize - 1);
+
+    if (error) {
+      console.error('브랜드 조회 오류:', error);
+      break;
+    }
+
+    if (!data || data.length === 0) break;
+    allBrands.push(...data.map(d => d.brand as string));
+    if (data.length < batchSize) break;
+    from += batchSize;
   }
 
-  return [...new Set(data.map(d => d.brand))].filter(Boolean) as string[];
+  return [...new Set(allBrands)].filter(Boolean).sort();
 }
 
 // 가차별 보유 가차샵 ID 목록 조회
