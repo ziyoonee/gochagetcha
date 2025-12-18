@@ -14,6 +14,9 @@ function toGachashop(row: Record<string, unknown>): Gachashop {
     imageUrl: row.image_url as string | undefined,
     instagramUrl: row.instagram_url as string | undefined,
     twitterUrl: row.twitter_url as string | undefined,
+    blogUrl: row.blog_url as string | undefined,
+    youtubeUrl: row.youtube_url as string | undefined,
+    websiteUrl: row.website_url as string | undefined,
     reviewCount: row.review_count as number | undefined,
     rating: row.rating as number | undefined,
     naverPlaceId: row.naver_place_id as string | undefined,
@@ -185,22 +188,39 @@ export async function getGachashopsByGachaId(gachaId: string): Promise<Gachashop
     .map(toGachashop);
 }
 
-// 검색 (한글 검색 name_ko, keywords 지원)
+// 검색 (하이브리드: 텍스트 매칭 + Trigram 유사도)
 export async function searchAll(query: string): Promise<{ gachashops: Gachashop[]; gachas: Gacha[] }> {
-  const [gachashopsResult, gachasResult] = await Promise.all([
-    supabase
-      .from('gachashops')
-      .select('*')
-      .or(`name.ilike.%${query}%,address.ilike.%${query}%`),
-    supabase
-      .from('gachas')
-      .select('*')
-      .or(`name.ilike.%${query}%,name_ko.ilike.%${query}%,brand.ilike.%${query}%,category.ilike.%${query}%,keywords.ilike.%${query}%`),
-  ]);
+  // 1. 가차샵: 기존 텍스트 검색 유지
+  const gachashopsResult = await supabase
+    .from('gachashops')
+    .select('*')
+    .or(`name.ilike.%${query}%,address.ilike.%${query}%`);
+
+  // 2. 가차: 텍스트 매칭 (정확한 결과)
+  const exactGachasResult = await supabase
+    .from('gachas')
+    .select('*')
+    .or(`name.ilike.%${query}%,name_ko.ilike.%${query}%,brand.ilike.%${query}%,category.ilike.%${query}%`);
+
+  // 3. 가차: Trigram 유사도 검색 (유사한 결과)
+  const similarGachasResult = await supabase
+    .rpc('search_gachas_trigram', {
+      search_query: query,
+      similarity_threshold: 0.2,
+      max_results: 50
+    });
+
+  // 4. 결과 병합 (텍스트 매칭 우선, 중복 제거)
+  const exactGachas = (exactGachasResult.data || []).map(toGacha);
+  const exactIds = new Set(exactGachas.map(g => g.id));
+
+  const similarGachas = (similarGachasResult.data || [])
+    .filter((g: Record<string, unknown>) => !exactIds.has(g.id as string))
+    .map(toGacha);
 
   return {
     gachashops: (gachashopsResult.data || []).map(toGachashop),
-    gachas: (gachasResult.data || []).map(toGacha),
+    gachas: [...exactGachas, ...similarGachas],
   };
 }
 
