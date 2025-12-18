@@ -6,6 +6,7 @@ import GachaCard from "@/components/cards/GachaCard";
 import FavoriteButton from "@/components/common/FavoriteButton";
 import EmbeddedMap from "@/components/common/EmbeddedMap";
 import CopyableText from "@/components/common/CopyableText";
+import DirectionsButton from "@/components/common/DirectionsButton";
 import { getGachashopById, getGachasByGachashopId } from "@/lib/db";
 
 export const revalidate = 60;
@@ -218,7 +219,124 @@ export default async function GachashopDetailPage({
                         rel="noopener noreferrer"
                         className="text-pink-500 hover:text-pink-600 font-medium transition-colors flex items-center gap-1 group"
                       >
-                        @{gachashop.instagramUrl.replace(/https?:\/\/(www\.)?instagram\.com\//, '').replace(/\/$/, '')}
+                        @{gachashop.instagramUrl.replace(/https?:\/\/(www\.)?instagram\.com\//, '').replace(/\/$/, '').split('?')[0]}
+                        <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* X (트위터) */}
+                {gachashop.twitterUrl && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shrink-0">
+                      <svg
+                        className="w-5 h-5 text-gray-800"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-0.5">X</p>
+                      <a
+                        href={gachashop.twitterUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-700 hover:text-gray-900 font-medium transition-colors flex items-center gap-1 group"
+                      >
+                        @{gachashop.twitterUrl.replace(/https?:\/\/(www\.)?(x\.com|twitter\.com)\//, '').replace(/\/$/, '').split('?')[0]}
+                        <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 네이버 블로그 */}
+                {gachashop.blogUrl && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center shrink-0">
+                      <svg
+                        className="w-5 h-5 text-green-600"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-0.5">블로그</p>
+                      <a
+                        href={gachashop.blogUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-green-600 hover:text-green-700 font-medium transition-colors flex items-center gap-1 group"
+                      >
+                        네이버 블로그
+                        <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 유튜브 */}
+                {gachashop.youtubeUrl && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center shrink-0">
+                      <svg
+                        className="w-5 h-5 text-red-600"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-0.5">유튜브</p>
+                      <a
+                        href={gachashop.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-500 hover:text-red-600 font-medium transition-colors flex items-center gap-1 group"
+                      >
+                        YouTube
+                        <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 웹사이트 */}
+                {gachashop.websiteUrl && (
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shrink-0">
+                      <svg
+                        className="w-5 h-5 text-blue-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-0.5">웹사이트</p>
+                      <a
+                        href={gachashop.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:text-blue-600 font-medium transition-colors flex items-center gap-1 group"
+                      >
+                        {gachashop.websiteUrl.replace(/https?:\/\/(www\.)?/, '').split('/')[0]}
                         <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
@@ -228,8 +346,8 @@ export default async function GachashopDetailPage({
                 )}
               </div>
 
-              {/* 지도 바로가기 버튼 */}
-              <div className="mt-6">
+              {/* 버튼들 */}
+              <div className="mt-6 flex flex-wrap gap-3">
                 <Link href={`/map`}>
                   <button className="w-full sm:w-auto bg-gradient-to-r from-rose-400 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white rounded-full px-8 py-3 font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95 flex items-center justify-center gap-2">
                     <svg
@@ -248,6 +366,13 @@ export default async function GachashopDetailPage({
                     지도에서 위치 보기
                   </button>
                 </Link>
+                {gachashop.latitude && gachashop.longitude && (
+                  <DirectionsButton
+                    latitude={gachashop.latitude}
+                    longitude={gachashop.longitude}
+                    name={gachashop.name}
+                  />
+                )}
               </div>
             </div>
           </div>

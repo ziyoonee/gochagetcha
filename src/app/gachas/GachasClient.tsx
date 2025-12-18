@@ -27,6 +27,7 @@ export default function GachasClient({ categories, brands, initialGachas, initia
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"newest" | "name" | "priceLow" | "priceHigh">("newest");
+  const [onlyAvailable, setOnlyAvailable] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -54,6 +55,7 @@ export default function GachasClient({ categories, brands, initialGachas, initia
       if (selectedCategory) params.set('category', selectedCategory);
       if (selectedBrand) params.set('brand', selectedBrand);
       if (selectedMonth !== 'all') params.set('month', selectedMonth);
+      if (onlyAvailable) params.set('available', 'true');
       params.set('sort', sortBy);
 
       const res = await fetch(`/api/gachas?${params.toString()}`);
@@ -72,13 +74,13 @@ export default function GachasClient({ categories, brands, initialGachas, initia
     } finally {
       setIsLoading(false);
     }
-  }, [searchQuery, selectedCategory, selectedBrand, selectedMonth, sortBy]);
+  }, [searchQuery, selectedCategory, selectedBrand, selectedMonth, sortBy, onlyAvailable]);
 
   // 필터/검색 변경 시 새로 로드
   useEffect(() => {
     if (!isMounted) return;
     fetchGachas(1, true);
-  }, [searchQuery, selectedCategory, selectedBrand, selectedMonth, sortBy, isMounted, fetchGachas]);
+  }, [searchQuery, selectedCategory, selectedBrand, selectedMonth, sortBy, onlyAvailable, isMounted, fetchGachas]);
 
   // 더 불러오기
   const loadMore = useCallback(() => {
@@ -123,13 +125,14 @@ export default function GachasClient({ categories, brands, initialGachas, initia
   const currentMonth = new Date().toISOString().substring(0, 7);
 
   // 활성 필터 개수
-  const activeFilterCount = [selectedCategory, selectedBrand, selectedMonth !== "all" ? selectedMonth : null].filter(Boolean).length;
+  const activeFilterCount = [selectedCategory, selectedBrand, selectedMonth !== "all" ? selectedMonth : null, onlyAvailable ? "available" : null].filter(Boolean).length;
 
   // 필터 초기화
   const resetFilters = () => {
     setSelectedCategory(null);
     setSelectedBrand(null);
     setSelectedMonth("all");
+    setOnlyAvailable(false);
   };
 
   const getSortLabel = (sort: typeof sortBy) => {
@@ -253,6 +256,20 @@ export default function GachasClient({ categories, brands, initialGachas, initia
                   {activeFilterCount > 0 && (
                     <span className="px-1.5 py-0.5 text-xs bg-rose-500 text-white rounded-full">{activeFilterCount}</span>
                   )}
+                </button>
+
+                {/* 판매처 있는 가차만 */}
+                <button
+                  onClick={() => setOnlyAvailable(!onlyAvailable)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full transition-all ${
+                    onlyAvailable ? "bg-emerald-100 text-emerald-600" : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  판매처 있음
                 </button>
 
                 {/* 정렬 */}

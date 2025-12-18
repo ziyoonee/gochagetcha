@@ -12,9 +12,22 @@ export async function GET(request: NextRequest) {
   const month = searchParams.get('month') || '';
   const sort = searchParams.get('sort') || 'newest';
   const query = searchParams.get('q') || '';
+  const available = searchParams.get('available') === 'true';
 
   const from = (page - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
+
+  // 판매처 있는 가차만 필터
+  let availableGachaIds: string[] | null = null;
+  if (available) {
+    const { data: mappings } = await supabase
+      .from('gachashop_gachas')
+      .select('gacha_id');
+    availableGachaIds = [...new Set((mappings || []).map((m: { gacha_id: string }) => m.gacha_id))];
+    if (availableGachaIds.length === 0) {
+      return NextResponse.json({ gachas: [], total: 0, page, pageSize: PAGE_SIZE, hasMore: false });
+    }
+  }
 
   // 검색어가 있으면 하이브리드 검색
   let matchedIds: string[] | null = null;
@@ -47,9 +60,23 @@ export async function GET(request: NextRequest) {
   // 검색 필터
   if (matchedIds !== null) {
     if (matchedIds.length === 0) {
-      return NextResponse.json({ gachas: [], total: 0, page, pageSize: PAGE_SIZE });
+      return NextResponse.json({ gachas: [], total: 0, page, pageSize: PAGE_SIZE, hasMore: false });
     }
     queryBuilder = queryBuilder.in('id', matchedIds);
+  }
+
+  // 판매처 있는 가차만 필터
+  if (availableGachaIds !== null) {
+    // 검색과 available 둘 다 있으면 교집합
+    if (matchedIds !== null) {
+      const intersection = matchedIds.filter(id => availableGachaIds!.includes(id));
+      if (intersection.length === 0) {
+        return NextResponse.json({ gachas: [], total: 0, page, pageSize: PAGE_SIZE, hasMore: false });
+      }
+      queryBuilder = supabase.from('gachas').select('*', { count: 'exact' }).in('id', intersection);
+    } else {
+      queryBuilder = queryBuilder.in('id', availableGachaIds);
+    }
   }
 
   // 카테고리 필터
